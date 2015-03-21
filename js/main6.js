@@ -3,7 +3,7 @@ var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload:
 function preload() {
 
     game.load.image('swagnemite', 'assets/swagnemite.png');
-    game.load.image('bullet', 'assets/swagnemite.png');
+    game.load.image('bullet', 'assets/bullet.png');
     game.load.spritesheet('shrek', 'assets/shrek.jpg');
 
 }
@@ -29,6 +29,8 @@ function create() {
     for (var i = 0; i < 50; i++)
     {
         var s = shrek.create(game.world.randomX, Math.random() * 500, 'shrek', game.rnd.integerInRange(0, 36));
+        s.scale.x = 0.05;
+        s.scale.y = 0.05;
         s.name = 'shrek' + i;
         s.body.immovable = true;
     }
@@ -47,7 +49,9 @@ function create() {
         b.events.onOutOfBounds.add(resetBullet, this);
     }
 
-    swagnemite = game.add.sprite(400, 550, 'phaser');
+    swagnemite = game.add.sprite(400, 550, 'swagnemite');
+    swagnemite.scale.x = 0.08;
+    swagnemite.scale.y = 0.08;
     game.physics.enable(swagnemite, Phaser.Physics.ARCADE);
 
     cursors = game.input.keyboard.createCursorKeys();
@@ -87,7 +91,7 @@ function fireBullet () {
 
         if (bullet)
         {
-            bullet.reset(swagnemite.x + 6, sprite.y - 8);
+            bullet.reset(swagnemite.x + 6, swagnemite.y - 8);
             bullet.body.velocity.y = -300;
             bulletTime = game.time.now + 150;
         }
