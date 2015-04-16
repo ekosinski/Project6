@@ -5,6 +5,7 @@ function preload() {
     game.load.image('swagnemite', 'assets/swagnemite.png');
     game.load.image('bullet', 'assets/bullet.png');
     game.load.spritesheet('shrek', 'assets/shrek.jpg');
+    game.load.audio('music','assets/libera.mp3');
 
 }
 
@@ -12,14 +13,19 @@ var swagnemite;
 var bullets;
 var shrek;
 var cursors;
+var score;
 
 var bulletTime = 0;
 var bullet;
 
+var music;
+
 function create() {
 
     game.stage.backgroundColor = '#2d2d2d';
-
+    music = game.add.audio('music');
+    music.loop = true;
+    music.play();
     //  This will check Group vs. Group collision (bullets vs. veggies!)
 
     shrek = game.add.group();
@@ -81,6 +87,9 @@ function update() {
         fireBullet();
     }
 
+    game.debug.text("Shoot the shreks!!!!!!",32,62);
+    game.debug.text("Your score is " + score,32,72);
+
 }
 
 function fireBullet () {
@@ -111,6 +120,7 @@ function collisionHandler (bullet, shrek) {
 
     bullet.kill();
     shrek.kill();
+    score = score + 10;
 
 }
 
